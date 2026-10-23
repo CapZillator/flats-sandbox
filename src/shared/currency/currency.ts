@@ -47,5 +47,7 @@ export function formatConvertedMoney(
     return formatMoney(amount, from, locale);
   }
 
-  return formatMoney((Number(amount) / fromRate) * toRate, to, locale);
+  const roundedAmount = Math.round(Number(amount));
+
+  return formatMoney((roundedAmount / fromRate) * toRate, to, locale);
 }
