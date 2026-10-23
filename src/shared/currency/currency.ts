@@ -20,8 +20,15 @@ export function isCurrency(value: unknown): value is Currency {
   return currencies.some((currency) => currency === value);
 }
 
+const defaultCurrencies = {
+  en: "USD",
+  ru: "RUB",
+  vi: "VND",
+} satisfies Record<Locale, Currency>;
+
+/** Returns the default display currency for the given locale. */
 export function defaultCurrency(locale: Locale): Currency {
-  return { en: "USD", ru: "RUB", vi: "VND" }[locale] as Currency;
+  return defaultCurrencies[locale];
 }
 
 export function formatConvertedMoney(
