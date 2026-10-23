@@ -24,6 +24,7 @@ export function defaultCurrency(locale: Locale): Currency {
   return { en: "USD", ru: "RUB", vi: "VND" }[locale] as Currency;
 }
 
+/** Converts an amount using USD-based rates, falling back when rates are invalid. */
 export function formatConvertedMoney(
   amount: string | number,
   from: Currency,
@@ -38,12 +39,7 @@ export function formatConvertedMoney(
   const fromRate = Number(snapshot.rates[from]);
   const toRate = Number(snapshot.rates[to]);
 
-  if (
-    !Number.isFinite(fromRate) ||
-    fromRate <= 0 ||
-    !Number.isFinite(toRate) ||
-    toRate <= 0
-  ) {
+  if (!Number.isFinite(toRate) || toRate <= 0) {
     return formatMoney(amount, from, locale);
   }
 
