@@ -1,0 +1,14 @@
+@layer utilities {
+  .page-gutters {
+    @apply px-4 md:px-6;
+  }
+
+  .content-container {
+    @apply mx-auto w-full max-w-container-lg;
+  }
+
+  .focus-visible-accent:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+}

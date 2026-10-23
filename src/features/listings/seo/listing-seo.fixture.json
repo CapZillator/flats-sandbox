@@ -1,0 +1,43 @@
+{
+  "id": "home-1",
+  "slug": "quiet-house",
+  "title": { "en": "Quiet house", "ru": "Тихий дом" },
+  "description": {
+    "en": "A bright home near the beach.",
+    "ru": "Светлый дом у пляжа."
+  },
+  "status": "PUBLISHED",
+  "propertyType": "HOUSE",
+  "furnishing": "FULLY_FURNISHED",
+  "bedrooms": 2,
+  "bathrooms": 1,
+  "floorAreaSqm": "72",
+  "floor": 0,
+  "monthlyPrice": "1200",
+  "currency": "USD",
+  "securityDeposit": "0",
+  "minimumLeaseMonths": 3,
+  "availableFrom": null,
+  "addressLine": "123 Beach Road",
+  "latitude": 16.05,
+  "longitude": 108.2,
+  "petsAllowed": false,
+  "isFeatured": false,
+  "publishedAt": "2026-10-01T00:00:00.000Z",
+  "updatedAt": "2026-10-15T00:00:00.000Z",
+  "location": {
+    "id": "city-1",
+    "slug": "da-nang",
+    "name": { "en": "Da Nang" },
+    "kind": "CITY",
+    "parentId": null
+  },
+  "images": [
+    {
+      "id": "image-1",
+      "url": "https://imagedelivery.net/example/home/public",
+      "alt": { "en": "House exterior" },
+      "sortOrder": 0
+    }
+  ]
+}

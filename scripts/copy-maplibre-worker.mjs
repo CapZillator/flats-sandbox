@@ -1,0 +1,20 @@
+import { copyFileSync, mkdirSync } from "node:fs";
+import { createRequire } from "node:module";
+import path from "node:path";
+
+const require = createRequire(import.meta.url);
+const packageDirectory = path.dirname(
+  require.resolve("maplibre-gl/package.json"),
+);
+const sourceDirectory = path.join(packageDirectory, "dist");
+const destinationDirectory = path.join(process.cwd(), "public", "maplibre");
+const workerFiles = ["maplibre-gl-worker.mjs", "maplibre-gl-shared.mjs"];
+
+mkdirSync(destinationDirectory, { recursive: true });
+
+for (const file of workerFiles) {
+  copyFileSync(
+    path.join(sourceDirectory, file),
+    path.join(destinationDirectory, file),
+  );
+}

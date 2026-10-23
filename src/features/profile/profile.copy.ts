@@ -1,0 +1,133 @@
+import type { Locale } from "@/shared/i18n/config";
+
+const copy = {
+  en: {
+    title: "Profile",
+    subtitle: "Tell future tenants about yourself and how to reach you.",
+    email: "Primary email",
+    emailHint:
+      "You use this email to sign in to the site. It cannot be changed manually.",
+    name: "Name",
+    displayName: "Public name",
+    bio: "About you",
+    language: "Preferred language",
+    inputLanguage: "Translation language",
+    profileHint:
+      "You can use a nickname as your public name and add a short bio in several languages.",
+    saveProfile: "Save profile",
+    profileSaved: "Profile saved",
+    contacts: "Contact methods",
+    contactsHint:
+      "Your contact details are visible only to signed-in users. Please add at least one contact method before submitting a listing for review.",
+    empty: "No contact methods yet.",
+    add: "Add contact",
+    type: "Contact type",
+    value: "Contact",
+    primary: "Primary contact",
+    remove: "Remove contact",
+    saveContacts: "Save contacts",
+    contactsSaved: "Contacts saved",
+    saving: "Saving…",
+    error: "Could not save changes. Please try again.",
+    tooLong: "This value is too long",
+    invalid: "Enter a valid contact",
+    duplicate: "This contact is already in the list",
+    onlyPrimary: "Choose only one primary contact",
+    limit: "You can add up to 12 contacts.",
+    types: {
+      PHONE: "Phone",
+      EMAIL: "Email",
+      WHATSAPP: "WhatsApp",
+      ZALO: "Zalo",
+      TELEGRAM: "Telegram",
+    },
+  },
+  ru: {
+    title: "Профиль",
+    subtitle: "Расскажите о себе и укажите, как с вами связаться.",
+    email: "Основной email",
+    emailHint:
+      "Этот email используется для входа на сайт. Его нельзя изменить вручную.",
+    name: "Имя",
+    displayName: "Публичное имя",
+    bio: "О себе",
+    language: "Предпочитаемый язык",
+    inputLanguage: "Язык перевода",
+    profileHint:
+      "Вы можете указать псевдоним (публичное имя) и коротко рассказать о себе на нескольких языках.",
+    saveProfile: "Сохранить профиль",
+    profileSaved: "Профиль сохранён",
+    contacts: "Способы связи",
+    contactsHint:
+      "Контакты видны только авторизованным пользователям. Пожалуйста, добавьте хотя бы один перед отправкой объявления на модерацию.",
+    empty: "Способов связи пока нет.",
+    add: "Добавить контакт",
+    type: "Тип контакта",
+    value: "Контакт",
+    primary: "Основной контакт",
+    remove: "Удалить контакт",
+    saveContacts: "Сохранить контакты",
+    contactsSaved: "Контакты сохранены",
+    saving: "Сохраняем…",
+    error: "Не удалось сохранить изменения. Попробуйте ещё раз.",
+    tooLong: "Значение слишком длинное",
+    invalid: "Введите корректный контакт",
+    duplicate: "Этот контакт уже добавлен",
+    onlyPrimary: "Выберите только один основной контакт",
+    limit: "Можно добавить до 12 контактов.",
+    types: {
+      PHONE: "Телефон",
+      EMAIL: "Email",
+      WHATSAPP: "WhatsApp",
+      ZALO: "Zalo",
+      TELEGRAM: "Telegram",
+    },
+  },
+  vi: {
+    title: "Hồ sơ",
+    subtitle: "Giới thiệu về bạn và cách liên hệ.",
+    email: "Email chính",
+    emailHint:
+      "Email này dùng để đăng nhập vào trang web. Bạn không thể tự thay đổi email này.",
+    name: "Tên",
+    displayName: "Tên công khai",
+    bio: "Giới thiệu",
+    language: "Ngôn ngữ ưu tiên",
+    inputLanguage: "Ngôn ngữ bản dịch",
+    profileHint:
+      "Bạn có thể dùng biệt danh làm tên công khai và viết vài dòng giới thiệu về mình bằng nhiều ngôn ngữ.",
+    saveProfile: "Lưu hồ sơ",
+    profileSaved: "Đã lưu hồ sơ",
+    contacts: "Thông tin liên hệ",
+    contactsHint:
+      "Chỉ người đã đăng nhập mới xem được thông tin liên hệ của bạn. Vui lòng thêm ít nhất một cách liên hệ trước khi gửi tin để xét duyệt.",
+    empty: "Chưa có thông tin liên hệ.",
+    add: "Thêm liên hệ",
+    type: "Loại liên hệ",
+    value: "Liên hệ",
+    primary: "Liên hệ chính",
+    remove: "Xóa liên hệ",
+    saveContacts: "Lưu liên hệ",
+    contactsSaved: "Đã lưu liên hệ",
+    saving: "Đang lưu…",
+    error: "Không thể lưu thay đổi. Vui lòng thử lại.",
+    tooLong: "Giá trị quá dài",
+    invalid: "Nhập liên hệ hợp lệ",
+    duplicate: "Liên hệ này đã tồn tại",
+    onlyPrimary: "Chỉ chọn một liên hệ chính",
+    limit: "Bạn có thể thêm tối đa 12 liên hệ.",
+    types: {
+      PHONE: "Điện thoại",
+      EMAIL: "Email",
+      WHATSAPP: "WhatsApp",
+      ZALO: "Zalo",
+      TELEGRAM: "Telegram",
+    },
+  },
+};
+
+export function getProfileCopy(locale: Locale) {
+  return copy[locale];
+}
+
+export type ProfileCopy = ReturnType<typeof getProfileCopy>;

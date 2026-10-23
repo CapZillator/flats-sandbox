@@ -1,0 +1,93 @@
+@theme {
+  --breakpoint-2xs: 375px;
+  --breakpoint-xs: 430px;
+  --breakpoint-sm: 520px;
+  --breakpoint-md: 720px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1440px;
+  --breakpoint-3xl: 1680px;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-foreground: var(--foreground);
+  --color-foreground-soft: var(--foreground-soft);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-border-light: var(--border-light);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-content: var(--accent-content);
+  --color-disabled: var(--disabled);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+
+  --font-sans:
+    var(--font-inter), ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+  --text-display: clamp(3rem, 6vw, 5.5rem);
+  --text-display--line-height: 0.95;
+  --text-display--letter-spacing: -0.045em;
+  --text-display--font-weight: 600;
+
+  --text-h1: clamp(2.25rem, 4vw, 4rem);
+  --text-h1--line-height: 1;
+  --text-h1--letter-spacing: -0.035em;
+  --text-h1--font-weight: 600;
+
+  --text-h2: clamp(1.75rem, 3vw, 2.75rem);
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.025em;
+  --text-h2--font-weight: 600;
+
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.015em;
+  --text-h3--font-weight: 600;
+
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.55;
+  --text-body: 1rem;
+  --text-body--line-height: 1.55;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.45;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.35;
+
+  --spacing-container-xl: 1920px;
+  --spacing-container-lg: 1440px;
+  --spacing-container-md: 1200px;
+  --spacing-container-sm: 960px;
+  --spacing-container-xs: 768px;
+
+  --radius-compact: 0.25rem;
+  --radius-control: 0.375rem;
+  --radius-surface: 0.5rem;
+  --radius-card: var(--radius-surface);
+  --radius-overlay: 0.75rem;
+  --text-2xs: 0.625rem;
+}
+
+@layer base {
+  :root,
+  html[data-theme="default"] {
+    --background: #ededed;
+    --surface: #ffffff;
+    --surface-muted: #f5f5f4;
+    --foreground: #181c1c;
+    --foreground-soft: #383d3d;
+    --muted: #737979;
+    --border: #c9cece;
+    --border-light: #dde0e0;
+    --accent: #ffe562;
+    --accent-hover: #f2d33f;
+    --accent-content: #181c1c;
+    --disabled: #d7d7d7;
+    --danger: #d95345;
+    --success: #548a58;
+    --warning: #ffaf1b;
+  }
+}
