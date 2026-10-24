@@ -16,6 +16,8 @@ export type ExchangeRatesSnapshot = {
   asOf: string;
 };
 
+const conversionFactors = new Map<string, number>();
+
 export function isCurrency(value: unknown): value is Currency {
   return currencies.some((currency) => currency === value);
 }
@@ -47,5 +49,13 @@ export function formatConvertedMoney(
     return formatMoney(amount, from, locale);
   }
 
-  return formatMoney((Number(amount) / fromRate) * toRate, to, locale);
+  const pair = `${from}:${to}`;
+  let factor = conversionFactors.get(pair);
+
+  if (factor === undefined) {
+    factor = toRate / fromRate;
+    conversionFactors.set(pair, factor);
+  }
+
+  return formatMoney(Number(amount) * factor, to, locale);
 }
