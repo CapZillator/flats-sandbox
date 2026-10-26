@@ -47,6 +47,7 @@ const dictionaries = {
       anyBedrooms: "Any",
       nearbyNature: "Nearby nature",
       landlordType: "Advertiser",
+      sharedRental: "Shared rental",
       propertyTypes: {
         APARTMENT: "Apartment",
         SERVICED_APARTMENT: "Serviced apartment",
@@ -351,6 +352,7 @@ const dictionaries = {
       anyBedrooms: "Любое количество",
       nearbyNature: "Природа рядом",
       landlordType: "Кто сдаёт",
+      sharedRental: "Совместная аренда",
       propertyTypes: {
         APARTMENT: "Квартира",
         SERVICED_APARTMENT: "Апартаменты с сервисом",
@@ -658,6 +660,7 @@ const dictionaries = {
       anyBedrooms: "Bất kỳ",
       nearbyNature: "Thiên nhiên gần nhà",
       landlordType: "Người cho thuê",
+      sharedRental: "Thuê chung",
       propertyTypes: {
         APARTMENT: "Căn hộ",
         SERVICED_APARTMENT: "Căn hộ dịch vụ",
