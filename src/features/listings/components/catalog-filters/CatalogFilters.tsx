@@ -235,6 +235,13 @@ export function CatalogFilters({
         </fieldset>
       </div>
 
+      <Checkbox
+        name="sharedRental"
+        value="true"
+        defaultChecked={value("sharedRental") === "true"}
+        label={dictionary.catalog.sharedRental}
+      />
+
       <div className="flex flex-col-reverse gap-2 border-t border-border-light pt-4 sm:flex-row sm:justify-end">
         <Link
           className={getButtonClassName({ variant: "ghost", size: "sm" })}
