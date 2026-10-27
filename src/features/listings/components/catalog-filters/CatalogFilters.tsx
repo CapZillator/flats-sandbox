@@ -235,6 +235,30 @@ export function CatalogFilters({
         </fieldset>
       </div>
 
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field htmlFor="catalog-lifestyle" label="Образ жизни">
+          <AdaptiveDropdown
+            id="catalog-lifestyle"
+            name="lifestyle"
+            defaultValue={value("lifestyle") ?? ""}
+            sheetTitle="Образ жизни"
+            closeLabel={dictionary.common.close}
+            options={[
+              { value: "", label: "Любой" },
+              { value: "quiet", label: "Тихое место" },
+              { value: "nightlife", label: "Ночная жизнь" },
+            ]}
+          />
+        </Field>
+
+        <Checkbox
+          name="sharedRental"
+          value="true"
+          defaultChecked={value("sharedRental") === "true"}
+          label={dictionary.catalog.sharedRental}
+        />
+      </div>
+
       <div className="flex flex-col-reverse gap-2 border-t border-border-light pt-4 sm:flex-row sm:justify-end">
         <Link
           className={getButtonClassName({ variant: "ghost", size: "sm" })}
