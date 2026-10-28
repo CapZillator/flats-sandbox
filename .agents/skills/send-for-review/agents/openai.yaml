@@ -1,0 +1,4 @@
+interface:
+  display_name: "Send for review"
+  short_description: "Publish a PR and monitor Codex review findings"
+  default_prompt: "Use $send-for-review to publish changes for review and monitor Codex findings."
