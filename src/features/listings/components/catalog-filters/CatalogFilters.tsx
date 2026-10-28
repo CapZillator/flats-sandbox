@@ -259,6 +259,25 @@ export function CatalogFilters({
         />
       </div>
 
+      <div className="grid gap-4 sm:grid-cols-3">
+        <Field htmlFor="catalog-heating" label="Отопление">
+          <AdaptiveDropdown
+            id="catalog-heating"
+            name="heating"
+            defaultValue={value("heating") ?? ""}
+            sheetTitle="Отопление"
+            closeLabel={dictionary.common.close}
+            options={[
+              { value: "", label: "Любое" },
+              { value: "air_conditioner", label: "Кондиционер" },
+              { value: "boiler", label: "Котёл" },
+              { value: "central", label: "Централизованное" },
+              { value: "none", label: "Нет" },
+            ]}
+          />
+        </Field>
+      </div>
+
       <div className="flex flex-col-reverse gap-2 border-t border-border-light pt-4 sm:flex-row sm:justify-end">
         <Link
           className={getButtonClassName({ variant: "ghost", size: "sm" })}
