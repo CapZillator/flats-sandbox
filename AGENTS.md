@@ -33,3 +33,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Avoid `if/else` branching. Prefer guard clauses and early `return` statements to handle exceptional cases and keep the main execution path flat.
 - Avoid `while` and `do...while` loops. Prefer `for`, `for...of`, or array methods appropriate to the task.
 - Avoid `switch` where possible. Prefer lookup maps or small functions with early returns when they make the code clearer.
+
+# Sending Changes for Review
+
+- When the user asks to send changes for review (for example, «Отправь изменения на ревью»), read and follow `.agents/skills/send-for-review/SKILL.md`.
+- That request authorizes relevant checks, a scoped commit, a normal feature-branch push, creating or reusing a PR, and creating or reusing its review monitor. Discussion of the workflow alone does not authorize publication.
+- Reuse an existing PR and monitor for the same branch/PR. Do not resume a paused monitor without the user's consent.
+- Propose review fixes before applying them. Keep merge decisions with the user.
