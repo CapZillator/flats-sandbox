@@ -40,12 +40,15 @@ jobs:
       github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      pull-requests: read
+      statuses: write
 
     steps:
-      - name: Request review for the validated commit
+      - name: Mark review as pending for the validated commit
+        id: review
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.CODERABBIT_TRIGGER_TOKEN }}
           script: |
             const { data: pr } = await github.rest.pulls.get({
               ...context.repo,
@@ -62,8 +65,39 @@ jobs:
               return;
             }
 
+            await github.rest.repos.createCommitStatus({
+              ...context.repo,
+              sha: pr.head.sha,
+              context: 'Codex review',
+              state: 'pending',
+              description: 'Waiting for Codex review.',
+            });
+            core.setOutput('sha', pr.head.sha);
+
+      - name: Request Codex review
+        if: steps.review.outputs.sha != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.CODERABBIT_TRIGGER_TOKEN }}
+          script: |
             await github.rest.issues.createComment({
               ...context.repo,
               issue_number: context.issue.number,
               body: '@codex review',
             });
+
+      - name: Release review status if the request failed
+        if: failure() && steps.review.outputs.sha != ''
+        uses: actions/github-script@v7
+        env:
+          REVIEW_SHA: ${{ steps.review.outputs.sha }}
+        with:
+          script: |
+            await github.rest.repos.createCommitStatus({
+              ...context.repo,
+              sha: process.env.REVIEW_SHA,
+              context: 'Codex review',
+              state: 'success',
+              description: 'Review request failed; merge allowed by soft-gate policy.',
+            });
+            core.warning('Codex review could not be requested. Merge is allowed without review.');
