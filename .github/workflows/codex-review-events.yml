@@ -1,0 +1,51 @@
+name: Codex review events
+
+on:
+  issue_comment:
+    types: [created, edited]
+
+permissions: {}
+
+jobs:
+  log-review-event:
+    name: Log Codex comment event
+    if: >-
+      github.event.issue.pull_request &&
+      github.event.comment.user.login == 'chatgpt-codex-connector[bot]' &&
+      github.event.comment.user.type == 'Bot'
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Record comment metadata and review state
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { action, comment, issue, sender } = context.payload;
+            const body = comment.body ?? '';
+            const stateMatch = body.match(/<!-- codex-review-state:v1\s+([\s\S]*?)\s*-->/);
+            let reviewState = null;
+
+            if (stateMatch) {
+              try {
+                reviewState = JSON.parse(stateMatch[1]);
+              } catch {
+                core.warning('Codex review state marker is present but is not valid JSON.');
+              }
+            }
+
+            core.info(JSON.stringify({
+              event: context.eventName,
+              action,
+              repository: context.repo,
+              pullRequest: issue.number,
+              commentId: comment.id,
+              commentUrl: comment.html_url,
+              author: comment.user.login,
+              authorId: comment.user.id,
+              sender: sender?.login,
+              createdAt: comment.created_at,
+              updatedAt: comment.updated_at,
+              reviewState,
+              body,
+            }));
