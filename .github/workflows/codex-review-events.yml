@@ -1,14 +1,21 @@
-name: Codex review events
+name: Codex review status
 
 on:
   issue_comment:
     types: [created, edited]
 
-permissions: {}
+permissions:
+  pull-requests: read
+  issues: read
+  statuses: write
+
+concurrency:
+  group: codex-review-status-${{ github.event.issue.number }}
+  cancel-in-progress: false
 
 jobs:
-  log-review-event:
-    name: Log Codex comment event
+  update-review-status:
+    name: Update Codex review status
     if: >-
       github.event.issue.pull_request &&
       github.event.comment.user.login == 'chatgpt-codex-connector[bot]' &&
@@ -17,11 +24,24 @@ jobs:
     timeout-minutes: 2
 
     steps:
-      - name: Record comment metadata and review state
+      - name: Update status for the reviewed commit
         uses: actions/github-script@v7
         with:
           script: |
-            const { action, comment, issue, sender } = context.payload;
+            const { issue } = context.payload;
+            // Read the latest version so a delayed event cannot restore an older state.
+            const { data: comment } = await github.rest.issues.getComment({
+              ...context.repo,
+              comment_id: context.payload.comment.id,
+            });
+
+            if (
+              comment.user.login !== 'chatgpt-codex-connector[bot]' ||
+              comment.user.type !== 'Bot'
+            ) {
+              return;
+            }
+
             const body = comment.body ?? '';
             const stateMatch = body.match(/<!-- codex-review-state:v1\s+([\s\S]*?)\s*-->/);
             let reviewState = null;
@@ -34,18 +54,40 @@ jobs:
               }
             }
 
-            core.info(JSON.stringify({
-              event: context.eventName,
-              action,
-              repository: context.repo,
-              pullRequest: issue.number,
-              commentId: comment.id,
-              commentUrl: comment.html_url,
-              author: comment.user.login,
-              authorId: comment.user.id,
-              sender: sender?.login,
-              createdAt: comment.created_at,
-              updatedAt: comment.updated_at,
-              reviewState,
-              body,
-            }));
+            const review = reviewState?.code_review;
+
+            if (!review || !['running', 'completed'].includes(review.status)) {
+              core.info('No supported Codex review state; leaving the status unchanged.');
+
+              return;
+            }
+
+            const { data: pr } = await github.rest.pulls.get({
+              ...context.repo,
+              pull_number: issue.number,
+            });
+
+            if (
+              pr.state !== 'open' ||
+              pr.draft ||
+              pr.head.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}` ||
+              review.commit_sha !== pr.head.sha
+            ) {
+              core.info('Review does not apply to the current open PR head; skipping.');
+
+              return;
+            }
+
+            const completed = review.status === 'completed';
+
+            await github.rest.repos.createCommitStatus({
+              ...context.repo,
+              sha: pr.head.sha,
+              context: 'Codex review',
+              state: completed ? 'success' : 'pending',
+              description: completed
+                ? 'Review completed. Findings are left to the author.'
+                : 'Codex review is running.',
+              target_url: comment.html_url,
+            });
+            core.info(`Codex review for ${pr.head.sha}: ${review.status}.`);
