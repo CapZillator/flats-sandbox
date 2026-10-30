@@ -58,4 +58,34 @@ describe("ListingCurrencyConverter", () => {
     );
     expect(screen.queryByRole("definition")).not.toBeInTheDocument();
   });
+
+  it.each([
+    {
+      currency: "VND" as const,
+      amount: "30000000",
+      expected: ["$1,200", "RUB 108,000"],
+    },
+    {
+      currency: "RUB" as const,
+      amount: "108000",
+      expected: ["$1,200", "₫30,000,000"],
+    },
+  ])(
+    "preserves conversion precision for $currency listings",
+    ({ currency, amount, expected }) => {
+      render(
+        <ListingCurrencyConverter
+          amount={amount}
+          currency={currency}
+          locale="en"
+        />,
+      );
+      fireEvent.click(screen.getByRole("button", { name: "Convert currency" }));
+      const values = within(screen.getByRole("dialog")).getAllByRole(
+        "definition",
+      );
+
+      expect(values.map((value) => value.textContent)).toEqual(expected);
+    },
+  );
 });

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { Currency } from "@/shared/api/types";
-import { currencies } from "@/shared/currency/currency";
+import { currencies, formatConvertedMoney } from "@/shared/currency/currency";
 import { useCurrency } from "@/shared/currency/components/currency-provider/CurrencyProvider";
 import type { Locale } from "@/shared/i18n/config";
 import { formatMoney } from "@/shared/lib/format";
@@ -57,24 +57,24 @@ export function ListingCurrencyConverter({
 
           {available ? (
             <dl className="grid gap-3">
-              {targets.map((target) => {
-                const rate = Number(
-                  (Number(snapshot?.rates[target]) / sourceRate).toFixed(2),
-                );
+              {targets.map((target) => (
+                <div
+                  key={target}
+                  className="flex items-baseline justify-between gap-4 border-b border-border-light pb-3"
+                >
+                  <dt className="text-body-sm text-muted">{target}</dt>
 
-                return (
-                  <div
-                    key={target}
-                    className="flex items-baseline justify-between gap-4 border-b border-border-light pb-3"
-                  >
-                    <dt className="text-body-sm text-muted">{target}</dt>
-
-                    <dd className="text-h3">
-                      {formatMoney(Number(amount) * rate, target, locale)}
-                    </dd>
-                  </div>
-                );
-              })}
+                  <dd className="text-h3">
+                    {formatConvertedMoney(
+                      amount,
+                      currency,
+                      target,
+                      locale,
+                      snapshot,
+                    )}
+                  </dd>
+                </div>
+              ))}
             </dl>
           ) : (
             <p role="status" className="text-body-sm text-muted">
