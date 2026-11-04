@@ -29,7 +29,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENROUTER__KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CONFIG__MODEL: openrouter/nvidia/nemotron-3.5-super-vl:free
+          CONFIG__MODEL: openrouter/openai/gpt-6.1-terra-pro
           CONFIG__CUSTOM_MODEL_MAX_TOKENS: "32000"
           CONFIG__FALLBACK_MODELS: "[]"
           OPENROUTER__MAX_TOKENS: "8000"
