@@ -32,4 +32,5 @@ jobs:
           CONFIG__MODEL: openrouter/openai/gpt-6.1-terra-pro
           CONFIG__CUSTOM_MODEL_MAX_TOKENS: "32000"
           CONFIG__FALLBACK_MODELS: "[]"
-          OPENROUTER__MAX_TOKENS: "8000"
+          OPENROUTER__MAX_TOKENS: "16000"
+          PR_REVIEWER__NUM_MAX_FINDINGS: "10"
