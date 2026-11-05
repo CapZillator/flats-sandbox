@@ -1,4 +1,51 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+
+language: en-US
+
 reviews:
+  profile: assertive
+  review_details: true
+  path_instructions:
+    - path: "src/**/*.{ts,tsx}"
+      instructions: >-
+        Review correctness, state transitions, data fetching, caching, error
+        handling, accessibility, localization, performance, and maintainability.
+        Trace relevant shared implementations and call sites before drawing
+        conclusions. Consider repeated interactions and changes to user inputs,
+        not only the initial successful interaction. Check user-visible text
+        against the supported locales and existing translation conventions.
+        Report actionable lower-severity issues as well as critical defects.
+        Give a concrete failure scenario or project-rule violation and a minimal
+        fix. Distinguish verified findings from questions requiring more context;
+        do not invent requirements or recommend speculative defensive changes.
+    - path: "src/**/*.tsx"
+      instructions: >-
+        Inspect rendering and resource-loading behavior across mobile and desktop
+        viewports. Evaluate image sizing, loading priority, layout stability,
+        unnecessary work, and network payloads using the project's actual Next.js
+        version and configuration. Read shared/styles and the README styling
+        conventions when assessing typography, spacing, and color usage. Prefer
+        existing semantic theme utilities over duplicated design values. Do not
+        assert measured performance regressions without measurement evidence;
+        explain the specific risk and how to verify it.
+    - path: "src/**/*.test.{ts,tsx}"
+      instructions: >-
+        Check whether assertions cover the changed behavior, repeated actions,
+        meaningful failure cases, and supported locales. Mocking a transport does
+        not by itself invalidate a component test. Verify shared component
+        contracts before alleging test failures. Do not change expected behavior
+        merely to accommodate an implementation regression.
+  tools:
+    eslint:
+      enabled: true
+      config_file: eslint.config.mjs
   auto_review:
     enabled: false
     auto_incremental_review: false
+
+knowledge_base:
+  code_guidelines:
+    enabled: true
+    filePatterns:
+      - "**/AGENTS.md"
+      - "README.md"
