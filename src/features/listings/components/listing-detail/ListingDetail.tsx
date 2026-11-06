@@ -27,6 +27,7 @@ import { getListingDetailCopy } from "./listing-detail.copy";
 import { AmenityIcon } from "../amenity-icon/AmenityIcon";
 import { EnvironmentFeatureIcon } from "../environment-feature-icon/EnvironmentFeatureIcon";
 import { ListingLocationMap } from "../listing-location-map/ListingLocationMap";
+import { ListingCurrencyConverter } from "../listing-currency-converter/ListingCurrencyConverter";
 
 export function ListingDetail({
   listing,
@@ -336,6 +337,14 @@ export function ListingDetail({
               </p>
 
               <p className="text-body-sm text-muted">{d.listing.perMonth}</p>
+
+              <div className="mt-3">
+                <ListingCurrencyConverter
+                  amount={listing.monthlyPrice}
+                  currency={listing.currency}
+                  locale={locale}
+                />
+              </div>
             </div>
 
             <FavoriteButton
