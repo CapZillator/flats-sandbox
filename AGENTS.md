@@ -34,6 +34,22 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Avoid `while` and `do...while` loops. Prefer `for`, `for...of`, or array methods appropriate to the task.
 - Avoid `switch` where possible. Prefer lookup maps or small functions with early returns when they make the code clearer.
 
+# Product and UI Requirements
+
+- Manden is a housing rental application for Vietnam with three supported locales: English (`en`), Russian (`ru`), and Vietnamese (`vi`). English routes are unprefixed; Russian and Vietnamese routes use `/ru` and `/vi`.
+- Put interface copy in the existing shared dictionaries or feature-local copy modules, providing all three translations. Include action labels, validation, loading and empty states, and accessible names. Keep user-provided listing content separate from interface translations and use the existing localized-content fallback helpers.
+- Treat `src/shared/styles/theme.css` and `docs/DESIGN_SYSTEM.md` as the visual source of truth. Reuse shared UI components and semantic utilities for colors, typography, and radii. Prefer existing tokens over raw palette classes, arbitrary color values, or duplicate inline styles. If a new visual role is needed, define it in the theme and document its purpose; content-specific colors such as property photographs are not UI theme tokens.
+- Page performance is a product requirement, including on mobile connections. Keep client-side code and network requests proportional to the interaction; avoid unnecessary downloads, repeated work, and layout shifts.
+- For images, use the project's image delivery and optimization conventions. Match responsive `sizes` to the rendered layout, reserve space with dimensions or an aspect ratio, and select loading behavior based on visibility and importance. Make likely LCP images discoverable early; lazy-load offscreen media and avoid eagerly loading every image or oversized assets without a display need.
+- Prefer responsive layout utilities and existing breakpoints to redundant or conflicting style overrides. Verify that styling remains useful across viewport sizes and translated text lengths.
+
+# Review guidelines
+
+- Apply the product and UI requirements above when reviewing changes, alongside functional correctness and accessibility.
+- Trace user interactions and data flow beyond the changed lines where context is available. Check loading, error, empty, and repeated-interaction behavior; passing tests alone do not establish correctness.
+- Explain a concrete affected scenario and the relevant project rule for each finding. Distinguish functional defects, performance risks, and design-system inconsistencies; do not present an unmeasured performance impact as a measured regression.
+- When a conclusion depends on unavailable code, runtime measurements, or an undocumented requirement, state the missing evidence rather than inventing it. Prefer minimal changes consistent with existing project conventions.
+
 # Sending Changes for Review
 
 - When the user asks to send changes for review (for example, «Отправь изменения на ревью»), read and follow `.agents/skills/send-for-review/SKILL.md`.
