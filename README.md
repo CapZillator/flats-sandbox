@@ -45,6 +45,51 @@ MapLibre 6 requires a separate ESM worker. The `predev` and `prebuild` scripts c
 - The service worker caches only the offline shell and same-origin static assets. API and authenticated data are deliberately never cached. Push hooks are reserved until a backend subscription contract exists.
 - Cloudflare images use the backend direct-upload/confirm flow. Delivery URLs are allowed through `next/image` only for `imagedelivery.net`.
 
+## Localization
+
+The interface supports English (`en`), Russian (`ru`), and Vietnamese (`vi`), as
+defined in `src/shared/i18n/config.ts`. English is the default and uses unprefixed
+routes; the other locales use `/ru` and `/vi`.
+
+New interface copy belongs in the shared dictionaries or the owning feature's
+copy module, with translations for all three locales. This includes action labels,
+validation messages, loading and empty states, and accessible names. Check layouts
+with translated text as well as English. User-provided listing content follows the
+separate `getLocalizedText` fallback policy described above.
+
+## Theme and styling
+
+Use `src/shared/styles/theme.css` and [the design system](docs/DESIGN_SYSTEM.md)
+as the source of truth for UI colors, typography, radii, and responsive breakpoints.
+Prefer shared UI primitives and semantic utilities such as `bg-surface`,
+`text-foreground`, and `border-border` to duplicated control styles or embedded
+palette values. Add a documented semantic token when a new visual role is needed
+rather than repeating raw colors across components.
+
+Keep responsive styling purposeful: avoid redundant declarations and conflicting
+overrides, and verify layouts at mobile and desktop widths. These rules apply to
+interface styling; property photography and other content retain their own colors.
+
+## Page performance
+
+Fast, stable pages on mobile connections are a product requirement. Consider
+Largest Contentful Paint (LCP), layout stability, transferred image bytes, and the
+amount of client-side work when adding or changing a screen. Use browser network
+and performance tools to investigate suspected regressions; distinguish measured
+results from risks inferred from code.
+
+Images should follow the existing Cloudflare delivery and `next/image`
+conventions. Set responsive `sizes` to reflect the actual display width, reserve
+layout space with dimensions or an aspect ratio, and choose loading behavior for
+the image's role. Likely LCP images should be discoverable early, while offscreen
+media should load lazily. Avoid unnecessary large image variants, eager loading
+of whole galleries, and decorative layout choices that add download or rendering
+cost without a product need.
+
+Keep interactive Client Components focused and reuse existing data-loading
+infrastructure. Check that new interactions do not introduce unnecessary requests,
+duplicate work, or avoidable layout shifts.
+
 ## Checks
 
 ```bash
