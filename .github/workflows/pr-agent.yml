@@ -35,4 +35,5 @@ jobs:
           CONFIG__OUTPUT_RUN_DETAILS: "true"
           CONFIG__OUTPUT_RUN_COST: "true"
           OPENROUTER__MAX_TOKENS: "16000"
+          OPENROUTER__REASONING_EFFORT: "high"
           PR_REVIEWER__NUM_MAX_FINDINGS: "10"
