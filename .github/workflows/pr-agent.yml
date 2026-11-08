@@ -29,10 +29,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENROUTER__KEY: ${{ secrets.OPENROUTER_API_KEY }}
-          CONFIG__MODEL: openrouter/deepseek/deepseek-v4.1-flash-1017
+          CONFIG__MODEL: openrouter/openrouter/minimax/minimax-m3
           CONFIG__CUSTOM_MODEL_MAX_TOKENS: "32000"
           CONFIG__FALLBACK_MODELS: "[]"
           CONFIG__OUTPUT_RUN_DETAILS: "true"
           CONFIG__OUTPUT_RUN_COST: "true"
-          OPENROUTER__MAX_TOKENS: "16000"
+          OPENROUTER__MAX_TOKENS: "32000"
           PR_REVIEWER__NUM_MAX_FINDINGS: "10"
