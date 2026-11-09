@@ -1,0 +1,38 @@
+name: Robin Review
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  issues: write
+  pull-requests: write
+
+jobs:
+  review:
+    name: Review pull request with Robin
+    if: >-
+      github.event.issue.pull_request &&
+      github.event.comment.body == '/robin' &&
+      github.event.sender.type != 'Bot' &&
+      contains(
+        fromJSON('["OWNER", "MEMBER", "COLLABORATOR"]'),
+        github.event.comment.author_association
+      )
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Run Robin
+        uses: antongulin/robin@v2.13.3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          llm-api-key: ${{ secrets.OPENROUTER_API_KEY }}
+          llm-base-url: https://openrouter.ai/api/v1
+          model: anthropic/claude-sonnet-5.5
+          agent-mode: "auto"
+          max-output-tokens: "16000"
+          review-instructions-file: AGENTS.md
+          request-changes: "false"
+          fail-on-high: "false"
