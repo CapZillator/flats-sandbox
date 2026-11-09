@@ -1,0 +1,57 @@
+name: PR-AF Review
+
+on:
+  pull_request:
+    types: [labeled]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    name: Review pull request with PR-AF
+    if: >-
+      github.event.label.name == 'pr-af' &&
+      github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 70
+    concurrency:
+      group: pr-af-review-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout PR-AF
+        uses: actions/checkout@v4
+        with:
+          repository: Agent-Field/pr-af
+          ref: 30a7245857691542f574e8a17cf4d28043cea7e6
+          path: pr-af
+          persist-credentials: false
+
+      - name: Start AgentField and PR-AF
+        working-directory: pr-af
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_AF_MODEL: anthropic/claude-sonnet-5.5
+          PR_AF_MAX_COST_USD: "1.0"
+          PR_AF_MAX_DURATION_SECONDS: "3600"
+        run: |
+          if [ -z "$OPENROUTER_API_KEY" ]; then
+            echo "::error::OPENROUTER_API_KEY is required for PR-AF reviews"
+            exit 1
+          fi
+
+          docker compose up --build --wait --wait-timeout 180
+
+      - name: Run PR-AF review
+        working-directory: pr-af
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+        run: python3 scripts/ci_runner.py
+
+      - name: Stop review services
+        if: ${{ always() }}
+        working-directory: pr-af
+        run: docker compose down --volumes
